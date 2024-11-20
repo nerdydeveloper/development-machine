@@ -1,0 +1,20 @@
+- name: Provision Development Environment
+  hosts: vagrant
+  become: yes
+- import_playbook: webservers.yml
+
+- name: Add MySQL Server
+  hosts: vagrant
+  roles:
+  - mysql
+
+- name: Add Node & NPM
+  hosts: vagrant
+  roles:
+  - node
+
+- name: Add Websites
+  hosts: vagrant
+  roles:
+  - { role: web, domain: 'wilsondev.local', database: 'wilsondev' }
+#  - { role: dbimport, database: 'lusso' }

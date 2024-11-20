@@ -1,0 +1,19 @@
+- name: Install NGINX
+  apt:
+    name: nginx
+    state: present
+- name: delete default nginx site
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+- name: Create Web Directory
+  file:
+    path: /web
+    state: directory
+    mode: 0775
+    owner: root
+    group: root
+- name: Start NGINX Service
+  service:
+    name: nginx
+    state: started

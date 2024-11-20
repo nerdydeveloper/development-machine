@@ -1,0 +1,69 @@
+
+- name: Install PHP Repository
+  apt_repository:
+    repo: ppa:ondrej/php
+    state: present
+- name: Install PHP FPM
+  apt:
+    name: php8.3-fpm
+    state: present
+- name: Install PHP BCMath Extension
+  apt:
+    name: php8.3-bcmath
+    state: present
+- name: Install PHP Common
+  apt:
+    name: php8.3-common
+    state: present
+- name: Install PHP GRPC
+  apt:
+    name: php8.3-grpc
+    state: present
+- name: Install PHP JSON Extension
+  apt:
+    name: php-json
+    state: present
+- name: Install PHP CURL Extension
+  apt:
+    name: php8.3-curl
+    state: present
+- name: Install PHP MBString Extension
+  apt:
+    name: php8.3-mbstring
+    state: present
+- name: Install PHP Tokenizer Extension
+  apt:
+    name: php8.3-tokenizer
+    state: present
+- name: Install PHP XML Extension
+  apt:
+    name: php8.3-xml
+    state: present
+- name: Install PHP GD Image Library
+  apt:
+    name: php8.3-gd
+    state: present
+- name: Install PHP SOAP Library
+  apt:
+      name: php8.3-soap
+      state: present
+- name: Install PHP Zip Extension
+  apt:
+    name: php8.3-zip
+    state: present
+- name: Install PHP MySQL Extension
+  apt:
+    name: php8.3-mysql
+    state: present
+- name: Install PHP International Extension
+  apt:
+      name: php8.3-intl
+      state: present
+- name: Install PHP Imagemagick Library
+  apt:
+    name: php8.3-imagick
+    state: present
+- name: Start PHP-FPM Service
+  service:
+    name: php8.3-fpm
+    state: started

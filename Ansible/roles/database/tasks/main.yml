@@ -1,0 +1,10 @@
+- name: Start MySQL Server
+  service:
+    name: mysql
+    state: started
+    use: 'service'
+- name: Create new database
+  community.mysql.mysql_db:
+    name: '{{ database }}'
+    state: present
+  when: database is defined

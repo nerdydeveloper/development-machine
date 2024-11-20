@@ -1,0 +1,18 @@
+- name: Install Redis Server
+  apt:
+    name: redis-server
+    state: present
+- name: Install Redis PHP Extension
+  apt:
+    name: php8.3-redis
+    state: present
+# Next command just disabled IPV6 for Redis Server, should be temporary until we move to Redis 5+
+- name: Disable IPv6 for Redis Server
+  replace: 
+    path: /etc/redis/redis.conf
+    regexp: 's/bind .*/'
+    replace: 'bind 127.0.0.1/g'
+- name: Start Redis Server
+  service:
+    name: redis-server
+    state: started

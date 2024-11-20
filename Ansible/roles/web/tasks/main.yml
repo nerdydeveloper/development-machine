@@ -1,0 +1,36 @@
+- name: Create Directory for {{ domain }}
+  file:
+    path: /web/{{ domain }}
+    state: directory
+    mode: 0775
+    owner: www-data
+    group: www-data
+- name: Check that the NGINX config exists
+  stat:
+    path: /etc/nginx/sites-enabled/{{ domain }}
+  register: stat_result
+- name: copy nginx site.conf for {{ domain }}
+  template:
+    src: site.conf
+    dest: /etc/nginx/sites-enabled/{{ domain }}
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart NGINX Service
+  when: not stat_result.stat.exists
+- name: Check MySQL Dump file exists
+  stat:
+    path: /mysql-dumps/{{ database }}.sql
+  register: mysql_dump_result
+  when: database is defined
+- name: Create Database for {{ domain }}
+  community.mysql.mysql_db:
+    name: "{{ database }}"
+    state: present
+  when: database is defined
+- name: Import MySQL Database for {{ domain }}
+  community.mysql.mysql_db:
+    name: "{{ database }}"
+    state: import
+    target: /mysql-dumps/{{ database }}.sql
+  when: (database is defined) and (mysql_dump_result.stat.exists) 

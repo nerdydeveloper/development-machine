@@ -1,0 +1,15 @@
+- name: Create Database {{ database }}
+  community.mysql.mysql_db:
+     name: "{{ database }}"
+     state: present
+  when: database is defined
+- name: Check MySQL Dump file exists
+  stat:
+     path: /mysql-dumps/{{ database }}.sql
+  register: mysql_dump_result
+- name: Import MySQL Database {{ database }}
+  community.mysql.mysql_db:
+     name: "{{ database }}"
+     state: import
+     target: /mysql-dumps/{{ database }}.sql
+  when: (database is defined) and (mysql_dump_result.stat.exists)

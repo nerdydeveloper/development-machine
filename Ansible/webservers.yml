@@ -1,0 +1,18 @@
+# ansible-playbook webservers.yml -i production --limit cook
+---
+- name: Add Packages to webservers
+  hosts: all
+  become: true
+  roles:
+  - common
+  - php
+  - composer
+  - redis
+  - nginx
+
+# Shouldn't be needed as we use Laravel Forge
+# - name: Add websites to production
+#   hosts: productionservername
+#   become: true
+#   roles:
+#   - { role: web, domain: 'lucid.lussostone.com' }

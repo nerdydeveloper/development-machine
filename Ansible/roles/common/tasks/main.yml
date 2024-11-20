@@ -1,0 +1,24 @@
+- name: Install Software Properties
+  apt:
+    name: software-properties-common
+    state: present
+- name: Install Net Tools
+  apt:
+    name: net-tools
+    state: present
+- name: Install UNzip
+  apt: 
+    name: unzip
+    state: present
+- name: Install CURL
+  apt:
+    name: curl
+    state: present
+- name: Install CRON service
+  apt:
+    name: cron
+    state: present
+- name: Start CRON Service
+  service:
+      name: cron
+      state: started

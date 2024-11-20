@@ -1,0 +1,30 @@
+# - name: Download MySQL 8.0 Server Repository
+#   get_url:
+#     url: https://dev.mysql.com/get/mysql-apt-config_0.8.22-1_all.deb
+#     dest: /tmp/mysql-apt-config_0.8.17-1_all.deb
+# - name: Install MySQL 8.0 Repository
+#   apt:
+#     deb: /tmp/mysql-apt-config_0.8.17-1_all.deb
+- name: Install MySQL Server
+  apt:
+    name: mysql-server
+    state: present
+- name: Installing MySQL Server
+  pause:
+    seconds: 10
+- name: Set MySQL User home directory
+  command: usermod -d /var/lib/mysql/ mysql
+- name: Start MySQL Server
+  command:
+    cmd: service mysql start
+    warn: no
+- name: Start MySQL Server
+  service:
+    name: mysql
+    state: started
+- name: Add user to MySQL
+  mysql_user:
+    name: vagrant
+    password: vagrant
+    priv: '*.*:ALL,GRANT'
+    login_unix_socket: /var/run/mysqld/mysqld.sock

@@ -1,0 +1,16 @@
+- name: Create Github User
+  user: 
+     name: github
+     groups: "www-data"
+- name: Ensure .ssh directory exists.
+  file: 
+    dest: "/home/github/.ssh"
+    mode: 0700 
+    owner: github 
+    state: directory     
+- name: Add Github Key
+  copy: 
+    src: files/keys/github 
+    dest: /home/github/.ssh/id_rsa
+    mode: 0600
+    owner: github

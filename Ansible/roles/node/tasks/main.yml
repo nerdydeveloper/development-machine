@@ -1,0 +1,13 @@
+- name: Download Install Node Script
+  get_url:
+      url: https://deb.nodesource.com/setup_19.x
+      dest: /tmp/install_node.sh
+      mode: '0777'
+- name: Install Node Repo
+  command: /tmp/install_node.sh
+# - name: Download Node and Install Node Repo
+#   command: curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+- name: Install Nodejs
+  apt:
+    name: nodejs
+    state: present
